@@ -11,7 +11,17 @@ Game::Game()
 	shape = CircleShape(50.f);
 	shape.setFillColor(sf::Color(100, 250, 50));
 
+	// shape integrada red
+	shape_integrada = CircleShape(50.f);
+	shape_integrada.setFillColor(sf::Color(250, 50, 50));
+
 	playing = true;
+
+	pos_exacta.x = 0;
+	pos_exacta.y = desplazamiento_inicial;
+
+	pos_integrada.x = 0;
+	pos_integrada.y = desplazamiento_inicial + 100;
 
 	loop();
 }
@@ -47,6 +57,10 @@ void Game::loop()
 */
 void Game::update()
 {
+	delta = clock.restart();
+	deltaTime = delta.asSeconds();
+	totalTime += deltaTime;
+
 	if (listeningKeys.leftArrow) shape.move(-1, 0);
 	if (listeningKeys.rightArrow) shape.move(1, 0);
 	if (listeningKeys.upArrow) shape.move(0, -1);
@@ -64,6 +78,7 @@ void Game::draw()
 	}
 
 	window->draw(shape);
+	window->draw(shape_integrada);
 }
 
 Game::~Game()

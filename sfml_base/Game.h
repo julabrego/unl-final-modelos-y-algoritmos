@@ -10,7 +10,12 @@ private:
 	RenderWindow* window;
 	SoundPlayer* soundPlayer;
 
-	CircleShape shape;
+	CircleShape shape, shape_integrada;
+
+	Clock clock;
+	Time delta;
+	float deltaTime;
+	float totalTime = 0;
 
 	struct {
 		bool leftArrow;

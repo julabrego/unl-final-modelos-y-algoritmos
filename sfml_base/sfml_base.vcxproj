@@ -145,12 +145,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="sfml_base.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="SoundPlayer.h" />

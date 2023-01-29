@@ -23,12 +23,12 @@ class Ball
 
 	bool isChargingUp = true;
 
-	enum ShotStep {
+	enum class ShotStep {
 		STILL,
 		CHARGING,
 		SHOOTING
 	};
-	ShotStep shotStep;
+	ShotStep shotStep = ShotStep::STILL;
 
 public:
 	Ball();

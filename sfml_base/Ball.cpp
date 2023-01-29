@@ -1,5 +1,25 @@
 #include "Ball.h"
 
+Ball::Ball()
+{
+}
+
+Ball::Ball(float gravity)
+{
+	this->gravity = gravity;
+
+	// Seteo círculo de color verde
+	shape = CircleShape(20.f);
+	shape.setFillColor(sf::Color(100, 250, 50));
+	shape.setOrigin(shape.getRadius(), shape.getRadius());
+	std::cout << "Radius: " << shape.getRadius() << std::endl;
+	
+	// Posición inicial
+	startPositionX = positionX = 400;
+	startPositionY = positionY = 30;
+
+}
+
 void Ball::restartPosition()
 {
 	positionX = startPositionX;
@@ -11,25 +31,6 @@ void Ball::resetParams()
 	velocityX = velocityY = initialVelocityY = .0f;
 }
 
-Ball::Ball()
-{
-}
-
-Ball::Ball(float gravity)
-{
-	this->gravity = gravity;
-
-	// Seteo círculo de color verde
-	shape = CircleShape(25.f);
-	shape.setFillColor(sf::Color(100, 250, 50));
-
-	// Posición inicial
-	startPositionX = positionX = 400 - shape.getRadius();
-	startPositionY = positionY = 10;
-
-	shotStep = ShotStep::STILL;
-
-}
 
 void Ball::update(float deltaTime)
 {

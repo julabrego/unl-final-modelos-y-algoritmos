@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "SoundPlayer.h"
 #include "Ball.h"
+#include "Arrow.h"
 
 using namespace sf;
 
@@ -19,6 +20,7 @@ private:
 	float gravity;
 
 	Ball *ball;
+	Arrow *arrow;
 
 	struct {
 		bool leftArrow = false;

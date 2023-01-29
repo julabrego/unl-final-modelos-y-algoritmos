@@ -10,6 +10,7 @@ Game::Game()
 	gravity = 9.8f;
 
 	ball = new Ball(gravity);
+	arrow = new Arrow();
 
 	playing = true;
 
@@ -28,9 +29,9 @@ void Game::loop()
 				window->close();
 
 			if (playing) {
-				/*listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
+				listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
-				listeningKeys.upArrow = Keyboard::isKeyPressed(Keyboard::Up);
+				/*listeningKeys.upArrow = Keyboard::isKeyPressed(Keyboard::Up);
 				listeningKeys.downArrow = Keyboard::isKeyPressed(Keyboard::Down);*/
 				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
 
@@ -54,11 +55,11 @@ void Game::update()
 	totalTime += deltaTime;
 
 	ball->update(deltaTime);
-	//if (listeningKeys.leftArrow) shape.move(-1, 0);
-	//if (listeningKeys.rightArrow) shape.move(1, 0);
-	//if (listeningKeys.upArrow) shape.move(0, -1);
-	//if (listeningKeys.downArrow) shape.move(0, 1);
-	//if (listeningKeys.space) soundPlayer->play(SoundPlayer::SoundName::Ejemplo1);
+	arrow->update(deltaTime);
+	if (listeningKeys.leftArrow)
+		arrow->rotateLeft();
+	else if (listeningKeys.rightArrow)
+		arrow->rotateRight();
 	ball->setIsPressingActionBtn(listeningKeys.space);
 }
 
@@ -72,6 +73,7 @@ void Game::draw()
 	}
 
 	ball->draw(window);
+	arrow->draw(window);
 }
 
 Game::~Game()

@@ -21,11 +21,11 @@ private:
 	Ball *ball;
 
 	struct {
-		bool leftArrow;
-		bool rightArrow;
-		bool upArrow;
-		bool downArrow;
-		bool space;
+		bool leftArrow = false;
+		bool rightArrow = false;
+		bool upArrow = false;
+		bool downArrow = false;
+		bool space = false;
 	} listeningKeys;
 
 	bool playing = false;

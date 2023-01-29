@@ -31,11 +31,11 @@ void Game::loop()
 				/*listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
 				listeningKeys.upArrow = Keyboard::isKeyPressed(Keyboard::Up);
-				listeningKeys.downArrow = Keyboard::isKeyPressed(Keyboard::Down);
-				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);*/
+				listeningKeys.downArrow = Keyboard::isKeyPressed(Keyboard::Down);*/
+				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
 
-				
-			}	
+
+			}
 		}
 
 		update();
@@ -44,7 +44,7 @@ void Game::loop()
 		window->display();
 	}
 }
-/** 
+/**
 * Método para actualizar el estado de los elementos en juego
 */
 void Game::update()
@@ -59,10 +59,10 @@ void Game::update()
 	//if (listeningKeys.upArrow) shape.move(0, -1);
 	//if (listeningKeys.downArrow) shape.move(0, 1);
 	//if (listeningKeys.space) soundPlayer->play(SoundPlayer::SoundName::Ejemplo1);
-
+	ball->setIsPressingActionBtn(listeningKeys.space);
 }
 
-/** 
+/**
 * Método para dibujar los elementos en juego
 */
 void Game::draw()

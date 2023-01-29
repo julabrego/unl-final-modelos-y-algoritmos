@@ -7,21 +7,11 @@ Game::Game()
 	window = new RenderWindow(VideoMode(800, 600, 32), "New game");
 	window->setFramerateLimit(60);
 
-	// set the shape color to green
-	shape = CircleShape(50.f);
-	shape.setFillColor(sf::Color(100, 250, 50));
+	gravity = 9.8f;
 
-	// shape integrada red
-	shape_integrada = CircleShape(50.f);
-	shape_integrada.setFillColor(sf::Color(250, 50, 50));
+	ball = new Ball(gravity);
 
 	playing = true;
-
-	pos_exacta.x = 0;
-	pos_exacta.y = desplazamiento_inicial;
-
-	pos_integrada.x = 0;
-	pos_integrada.y = desplazamiento_inicial + 100;
 
 	loop();
 }
@@ -38,11 +28,13 @@ void Game::loop()
 				window->close();
 
 			if (playing) {
-				listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
+				/*listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
 				listeningKeys.upArrow = Keyboard::isKeyPressed(Keyboard::Up);
 				listeningKeys.downArrow = Keyboard::isKeyPressed(Keyboard::Down);
-				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
+				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);*/
+
+				
 			}	
 		}
 
@@ -61,11 +53,13 @@ void Game::update()
 	deltaTime = delta.asSeconds();
 	totalTime += deltaTime;
 
-	if (listeningKeys.leftArrow) shape.move(-1, 0);
-	if (listeningKeys.rightArrow) shape.move(1, 0);
-	if (listeningKeys.upArrow) shape.move(0, -1);
-	if (listeningKeys.downArrow) shape.move(0, 1);
-	if (listeningKeys.space) soundPlayer->play(SoundPlayer::SoundName::Ejemplo1);
+	ball->update(deltaTime);
+	//if (listeningKeys.leftArrow) shape.move(-1, 0);
+	//if (listeningKeys.rightArrow) shape.move(1, 0);
+	//if (listeningKeys.upArrow) shape.move(0, -1);
+	//if (listeningKeys.downArrow) shape.move(0, 1);
+	//if (listeningKeys.space) soundPlayer->play(SoundPlayer::SoundName::Ejemplo1);
+
 }
 
 /** 
@@ -77,8 +71,7 @@ void Game::draw()
 		// player->draw(window);
 	}
 
-	window->draw(shape);
-	window->draw(shape_integrada);
+	ball->draw(window);
 }
 
 Game::~Game()

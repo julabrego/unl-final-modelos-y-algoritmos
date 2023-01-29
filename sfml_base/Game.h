@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "SoundPlayer.h"
+#include "Ball.h"
 
 using namespace sf;
 
@@ -10,12 +11,14 @@ private:
 	RenderWindow* window;
 	SoundPlayer* soundPlayer;
 
-	CircleShape shape, shape_integrada;
-
 	Clock clock;
 	Time delta;
 	float deltaTime;
 	float totalTime = 0;
+
+	float gravity;
+
+	Ball *ball;
 
 	struct {
 		bool leftArrow;

@@ -36,3 +36,8 @@ void Arrow::draw(RenderWindow* window)
 {
 	window->draw(rectangle);
 }
+
+float Arrow::getDirection()
+{
+	return direction;
+}

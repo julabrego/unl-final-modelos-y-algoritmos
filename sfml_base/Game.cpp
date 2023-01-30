@@ -60,7 +60,7 @@ void Game::update()
 		arrow->rotateLeft();
 	else if (listeningKeys.rightArrow)
 		arrow->rotateRight();
-	ball->setIsPressingActionBtn(listeningKeys.space);
+	ball->setIsPressingActionBtn(listeningKeys.space, arrow->getDirection());
 }
 
 /**

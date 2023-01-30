@@ -35,7 +35,7 @@ void Ball::resetParams()
 void Ball::update(float deltaTime)
 {
 	if (moving) {
-		std::cout << "initial: " << velocityY << std::endl;
+		//std::cout << "initial: " << velocityY << std::endl;
 		velocityY += gravity;
 
 		// Resistencia cuando sube
@@ -101,9 +101,10 @@ void Ball::draw(RenderWindow* window)
 	window->draw(shape);
 }
 
-void Ball::setIsPressingActionBtn(bool isPressing)
+void Ball::setIsPressingActionBtn(bool isPressing, float direction)
 {
 	isPressingActionBtn = isPressing;
+	initialVelocityX = direction;
 }
 
 void Ball::shot()
@@ -111,5 +112,7 @@ void Ball::shot()
 	std::cout << "Release" << std::endl;
 	shotStep = ShotStep::SHOOTING;
 	velocityY = initialVelocityY * 10;
+	
+	std::cout << std::abs(initialVelocityY) - std::abs(initialVelocityX) << std::endl;
 	if (!moving) moving = true;
 }

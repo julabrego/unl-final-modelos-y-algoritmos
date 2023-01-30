@@ -18,5 +18,7 @@ public:
 
 	void update(float deltaTime);
 	void draw(RenderWindow *window);
+
+	float getDirection();
 };
 

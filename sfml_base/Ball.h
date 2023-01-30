@@ -9,6 +9,7 @@ class Ball
 	float startPositionX = .0f;
 	float startPositionY = .0f;
 	float initialVelocityY = .0f;
+	float initialVelocityX = .0f;
 	float positionX = .0f;
 	float positionY = .0f;
 	float velocityX = .0f;
@@ -41,7 +42,7 @@ public:
 	void shot();
 	void charge();
 
-	void setIsPressingActionBtn(bool isPressing);
+	void setIsPressingActionBtn(bool isPressing, float direction);
 
 	void draw(RenderWindow* window);
 };

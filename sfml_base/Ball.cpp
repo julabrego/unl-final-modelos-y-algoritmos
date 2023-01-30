@@ -2,18 +2,12 @@
 
 Ball::Ball()
 {
-}
-
-Ball::Ball(float gravity)
-{
-	this->gravity = gravity;
-
 	// Seteo círculo de color verde
 	shape = CircleShape(20.f);
 	shape.setFillColor(sf::Color(100, 250, 50));
 	shape.setOrigin(shape.getRadius(), shape.getRadius());
 	std::cout << "Radius: " << shape.getRadius() << std::endl;
-	
+
 	// Posición inicial
 	startPositionX = positionX = 400;
 	startPositionY = positionY = 30;
@@ -26,93 +20,53 @@ void Ball::restartPosition()
 	positionY = startPositionY;
 }
 
-void Ball::resetParams()
-{
-	velocityX = velocityY = initialVelocityY = .0f;
-}
-
-
 void Ball::update(float deltaTime)
 {
-	if (moving) {
-		//std::cout << "initial: " << velocityY << std::endl;
-		velocityY += gravity;
+	if (playing) {
 
-		// Resistencia cuando sube
-		if (velocityY < 0) {
-			velocityY += std::abs(velocityY) * .025;
+		// Movimiento horizontal
+		if (isMovingLeft && velocityX > -maxHorizontalSpeed)
+			velocityX -= horizontalAcceleration;
+		if (isMovingRight && velocityX < maxHorizontalSpeed)
+			velocityX += horizontalAcceleration;
+
+		if (!isMovingLeft && !isMovingRight || isMovingLeft && isMovingRight) {
+			if (velocityX < 0) velocityX += horizontalAcceleration;
+			else if (velocityX > 0) velocityX -= horizontalAcceleration;
+			if (std::abs(velocityX < 30 && velocityX > 0)) velocityX = 0;
 		}
 
-		// bounce();
 	}
 
-	// Caída hasta el borde inferior de la pantalla
-	if (positionY >= 600 - shape.getRadius() && velocityY > 0) {
-		restartPosition();
-		resetParams();
-		shotStep = ShotStep::STILL;
-		moving = false;
-	}
+	if (positionX < shape.getRadius() || positionX > 800 - shape.getRadius()) bounce();
+
 	// Actualización de coordenadas
 	positionX += velocityX * deltaTime;
-	positionY += velocityY * deltaTime;
 
 	// Nueva posición
 	shape.setPosition(positionX, positionY);
 
-	if (isPressingActionBtn) {
-		if (shotStep == ShotStep::STILL) {
-			startCharge();
-		}
-
-		if (shotStep == ShotStep::CHARGING) {
-			charge();
-		}
-	}
-	else if (shotStep == ShotStep::CHARGING) {
-		shot();
-	}
+	std::cout << velocityX << std::endl;
 
 }
 
 void Ball::bounce()
 {
-	velocityY = -velocityY * 0.9;
+	velocityX = -velocityX * 0.9;
 }
 
-void Ball::startCharge()
+void Ball::setIsMovingLeft(bool isMovingLeft)
 {
-	std::cout << "Start charging" << std::endl;
-	shotStep = ShotStep::CHARGING;
+	this->isMovingLeft = isMovingLeft;
 }
 
-void Ball::charge() {
-	if (isChargingUp) initialVelocityY++; else initialVelocityY--;
-
-	if (initialVelocityY < 0) isChargingUp = true;
-	if (initialVelocityY > 100) isChargingUp = false;
-
-	std::cout << initialVelocityY << std::endl;
+void Ball::setIsMovingRight(bool isMovingRight)
+{
+	this->isMovingRight = isMovingRight;
 }
-
 
 void Ball::draw(RenderWindow* window)
 {
 	window->draw(shape);
 }
 
-void Ball::setIsPressingActionBtn(bool isPressing, float direction)
-{
-	isPressingActionBtn = isPressing;
-	initialVelocityX = direction;
-}
-
-void Ball::shot()
-{
-	std::cout << "Release" << std::endl;
-	shotStep = ShotStep::SHOOTING;
-	velocityY = initialVelocityY * 10;
-	
-	std::cout << std::abs(initialVelocityY) - std::abs(initialVelocityX) << std::endl;
-	if (!moving) moving = true;
-}

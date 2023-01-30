@@ -7,10 +7,7 @@ Game::Game()
 	window = new RenderWindow(VideoMode(800, 600, 32), "New game");
 	window->setFramerateLimit(60);
 
-	gravity = 9.8f;
-
-	ball = new Ball(gravity);
-	arrow = new Arrow();
+	ball = new Ball();
 
 	playing = true;
 
@@ -31,8 +28,6 @@ void Game::loop()
 			if (playing) {
 				listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
-				/*listeningKeys.upArrow = Keyboard::isKeyPressed(Keyboard::Up);
-				listeningKeys.downArrow = Keyboard::isKeyPressed(Keyboard::Down);*/
 				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
 
 
@@ -55,12 +50,16 @@ void Game::update()
 	totalTime += deltaTime;
 
 	ball->update(deltaTime);
-	arrow->update(deltaTime);
+
 	if (listeningKeys.leftArrow)
-		arrow->rotateLeft();
-	else if (listeningKeys.rightArrow)
-		arrow->rotateRight();
-	ball->setIsPressingActionBtn(listeningKeys.space, arrow->getDirection());
+		ball->setIsMovingLeft(true);
+	else
+		ball->setIsMovingLeft(false);
+	
+	if (listeningKeys.rightArrow)
+		ball->setIsMovingRight(true);
+	else
+		ball->setIsMovingRight(false);
 }
 
 /**
@@ -73,7 +72,6 @@ void Game::draw()
 	}
 
 	ball->draw(window);
-	arrow->draw(window);
 }
 
 Game::~Game()

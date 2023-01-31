@@ -6,12 +6,10 @@ Ball::Ball()
 	shape = CircleShape(20.f);
 	shape.setFillColor(sf::Color(100, 250, 50));
 	shape.setOrigin(shape.getRadius(), shape.getRadius());
-	std::cout << "Radius: " << shape.getRadius() << std::endl;
 
 	// Posición inicial
 	startPositionX = positionX = 400;
-	startPositionY = positionY = 30;
-
+	startPositionY = positionY = 50;
 }
 
 void Ball::restartPosition()
@@ -38,15 +36,22 @@ void Ball::update(float deltaTime)
 
 	}
 
-	if (positionX < shape.getRadius() || positionX > 800 - shape.getRadius()) bounce();
+	// Bordes de pantalla
+	if (positionX < shape.getRadius()) {
+		positionX = shape.getRadius();
+		bounce();
+	}
+
+	if (positionX > 800 - shape.getRadius()) {
+		positionX = 800 - shape.getRadius();
+		bounce();
+	}
 
 	// Actualización de coordenadas
 	positionX += velocityX * deltaTime;
 
 	// Nueva posición
 	shape.setPosition(positionX, positionY);
-
-	std::cout << velocityX << std::endl;
 
 }
 

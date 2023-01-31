@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "SoundPlayer.h"
 #include "Ball.h"
+#include "Item.h"
+#include "Score.h"
 
 using namespace sf;
 
@@ -17,6 +19,14 @@ private:
 	float totalTime = 0;
 
 	Ball *ball;
+	Item* items[5];
+
+	Score score;
+
+	float spawnFrequency = 3.f;
+	float holdingToSpawn = 0.f;
+
+	int nextItem = -1;
 
 	struct {
 		bool leftArrow = false;

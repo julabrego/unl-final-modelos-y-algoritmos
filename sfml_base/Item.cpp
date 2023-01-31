@@ -70,6 +70,15 @@ void Item::start()
 	moving = true;
 }
 
+void Item::setMaxSpeed(float maxSpeed)
+{
+	this->maxSpeed = maxSpeed;
+}
+float Item::getMaxSpeed()
+{
+	return this->maxSpeed;
+}
+
 bool Item::isMoving()
 {
 	return moving;

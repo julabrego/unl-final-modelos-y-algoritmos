@@ -33,6 +33,8 @@ public:
 	void reachTop();
 	void stop();
 	void start();
+	void setMaxSpeed(float maxSpeed);
+	float getMaxSpeed();
 	bool isMoving();
 };
 

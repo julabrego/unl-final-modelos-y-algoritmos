@@ -18,10 +18,15 @@ Game::Game()
 	items[2] = new Item(&score);
 	items[3] = new Item(&score);
 	items[4] = new Item(&score);
+	items[5] = new Item(&score);
+	items[6] = new Item(&score);
+	items[7] = new Item(&score);
+	items[8] = new Item(&score);
+	items[9] = new Item(&score);
+	items[10] = new Item(&score);
 
-	for (int i = 0; i < 5; i++) {
-		std::cout << (window->getSize().x - 10 / 5 + 10) * i + 1 << std::endl;
-		items[i]->setPositionX(((window->getSize().x / 5) * i) + (window->getSize().x / 5) / 2);
+	for (int i = 0; i < 11; i++) {
+		items[i]->setPositionX(((window->getSize().x / 11) * i) + (window->getSize().x / 11) / 2);
 	}
 
 	playing = true;
@@ -63,6 +68,7 @@ void Game::update()
 	totalTime += deltaTime;
 	holdingToSpawn += deltaTime;
 
+	/*std::cout << totalTime << std::endl;*/
 	ball->update(deltaTime);
 
 	if (listeningKeys.leftArrow)
@@ -85,11 +91,25 @@ void Game::update()
 
 		// spawn item en posición random
 		do {
-			nextItem = rand() % 5;
+			nextItem = rand() % 11;
+			std::cout << nextItem << std::endl;
 		} while (items[nextItem]->isMoving());
 
 		items[nextItem]->start();
 		nextItem = -1;
+
+		// Se cuelga
+		if (score.getAvoidedItems() > 0 && score.getAvoidedItems() % 2 == 0) {
+			if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
+
+			for (Item* item : items) {
+				if(item->getMaxSpeed() < 1000)
+					item->setMaxSpeed(item->getMaxSpeed() + 10);
+				std::cout << "max speed: " << item->getMaxSpeed() << std::endl;
+			};
+
+			if (spawnFrequency < 0.6) spawnFrequency = 0.6;
+		}
 	}
 }
 

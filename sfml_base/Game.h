@@ -19,12 +19,12 @@ private:
 	float totalTime = 0;
 
 	Ball *ball;
-	Item* items[5];
+	Item* items[11];
 
 	Score score;
 
-	float spawnFrequency = 3.f;
-	float holdingToSpawn = 0.f;
+	double spawnFrequency = .8f;
+	double holdingToSpawn = 0.f;
 
 	int nextItem = -1;
 

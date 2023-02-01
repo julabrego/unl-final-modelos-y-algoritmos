@@ -4,7 +4,6 @@ Ball::Ball()
 {
 	// Seteo círculo de color verde
 	shape = CircleShape(20.f);
-	shape.setFillColor(sf::Color(100, 250, 50));
 	shape.setOrigin(shape.getRadius(), shape.getRadius());
 
 	hitbox = RectangleShape(Vector2f(30, 30));
@@ -14,6 +13,12 @@ Ball::Ball()
 	// Posición inicial
 	startPositionX = positionX = 400;
 	startPositionY = positionY = 50;
+}
+
+void Ball::generateColor()
+{
+	color = rand() % 4;
+	shape.setFillColor(AVAILABLE_COLORS[color]);
 }
 
 void Ball::restartPosition()
@@ -77,6 +82,12 @@ void Ball::setIsMovingRight(bool isMovingRight)
 void Ball::draw(RenderWindow* window)
 {
 	window->draw(shape);
+	//window->draw(hitbox);
+}
+
+int Ball::getColor()
+{
+	return color;
 }
 
 RectangleShape Ball::getHitbox()

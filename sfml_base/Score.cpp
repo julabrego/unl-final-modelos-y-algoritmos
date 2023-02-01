@@ -17,6 +17,12 @@ int Score::getAvoidedItems()
 	return avoidedItems;
 }
 
+void Score::substractOneItem()
+{
+	avoidedItems--;
+	total = avoidedItems * 100;
+}
+
 int Score::getTotal()
 {
 	return total;

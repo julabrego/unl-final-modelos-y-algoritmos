@@ -8,6 +8,7 @@ private:
 public:
 	Score();
 	void addOneItem();
+	void substractOneItem();
 	int getAvoidedItems();
 	int getTotal();
 };

@@ -23,6 +23,9 @@ private:
 	bool playing = true;
 	bool isPressingActionBtn;
 
+	int color = 0;
+	sf::Color AVAILABLE_COLORS[4] = { sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Magenta };
+
 	void restartPosition();
 
 public:
@@ -35,7 +38,10 @@ public:
 	void setIsMovingRight(bool isMovingRight);
 
 	void draw(RenderWindow* window);
+	int getColor();
 
 	RectangleShape getHitbox();
+	void generateColor();
+
 };
 

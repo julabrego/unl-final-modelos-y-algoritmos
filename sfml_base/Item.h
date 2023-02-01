@@ -2,6 +2,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Score.h"
+#include <ctime>
+#include <stdlib.h>
 
 using namespace sf;
 
@@ -22,6 +24,9 @@ private:
 	float acceleration = 10.0f;
 	float maxSpeed = 200.0f;
 
+	int color = 0;
+	void generateColor();
+	sf::Color AVAILABLE_COLORS[4] = { sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Magenta };
 
 	bool moving = false;
 
@@ -39,6 +44,8 @@ public:
 	float getMaxSpeed();
 	bool isMoving();
 
-	bool isBeingHitted(RectangleShape playersHitbox);
+	bool handleCollisionWithPlayer(RectangleShape playersHitbox);
+	int getColor();
+
 };
 

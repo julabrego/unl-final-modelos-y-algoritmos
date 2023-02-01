@@ -1,16 +1,23 @@
 #include "Item.h"
 
+void Item::generateColor()
+{
+	color = rand() % 4;
+	circle.setFillColor(AVAILABLE_COLORS[color]);
+}
+
 Item::Item()
 {
 }
 
 Item::Item(Score* score)
 {
+	srand(time(NULL));
+
 	// Seteo círculo de color verde
 	circle = CircleShape(20.f);
-	circle.setFillColor(sf::Color(100, 0, 0));
 	circle.setOrigin(circle.getRadius(), circle.getRadius());
-	
+
 	// Hitbox
 	hitbox = RectangleShape(Vector2f(30, 30));
 	hitbox.setFillColor(sf::Color(255, 255, 0, 100));
@@ -44,7 +51,7 @@ void Item::update(float deltaTime)
 void Item::draw(RenderWindow* window)
 {
 	window->draw(circle);
-	window->draw(hitbox);
+	//window->draw(hitbox);
 }
 
 void Item::setPositionX(float positionX)
@@ -61,8 +68,6 @@ void Item::reachTop()
 {
 	resetPositionY();
 	stop();
-	_score->addOneItem();
-	std::cout << "avoided: " << _score->getAvoidedItems() << std::endl;
 }
 
 void Item::stop()
@@ -74,6 +79,7 @@ void Item::stop()
 void Item::start()
 {
 	moving = true;
+	generateColor();
 }
 
 void Item::setMaxSpeed(float maxSpeed)
@@ -90,7 +96,16 @@ bool Item::isMoving()
 	return moving;
 }
 
-bool Item::isBeingHitted(RectangleShape playersHitbox)
+bool Item::handleCollisionWithPlayer(RectangleShape playersHitbox)
 {
-	return hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds());
+	if (hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds())) {
+		reachTop();
+		return true;
+	}
+	return false;
+}
+
+int Item::getColor()
+{
+	return color;
 }

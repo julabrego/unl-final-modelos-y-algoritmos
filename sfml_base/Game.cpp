@@ -103,12 +103,19 @@ void Game::update()
 			if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
 
 			for (Item* item : items) {
-				if(item->getMaxSpeed() < 1000)
+				if(item->getMaxSpeed() < 500)
 					item->setMaxSpeed(item->getMaxSpeed() + 10);
 				std::cout << "max speed: " << item->getMaxSpeed() << std::endl;
 			};
 
 			if (spawnFrequency < 0.6) spawnFrequency = 0.6;
+		}
+	}
+
+	// Check collisions
+	for (Item* item : items) {
+		if (item->isBeingHitted(ball->getHitbox())) {
+			std::cout << "PUMBA" << std::endl;
 		}
 	}
 }

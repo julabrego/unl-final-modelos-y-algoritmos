@@ -10,6 +10,7 @@ class Item
 private:
 	float speed = 0;
 	CircleShape circle;
+	RectangleShape hitbox;
 	Score* _score;
 
 	float startPositionX = .0f;
@@ -20,6 +21,7 @@ private:
 	float velocityY = .0f;
 	float acceleration = 10.0f;
 	float maxSpeed = 200.0f;
+
 
 	bool moving = false;
 
@@ -36,5 +38,7 @@ public:
 	void setMaxSpeed(float maxSpeed);
 	float getMaxSpeed();
 	bool isMoving();
+
+	bool isBeingHitted(RectangleShape playersHitbox);
 };
 

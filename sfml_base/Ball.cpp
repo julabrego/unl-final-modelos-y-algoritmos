@@ -7,6 +7,10 @@ Ball::Ball()
 	shape.setFillColor(sf::Color(100, 250, 50));
 	shape.setOrigin(shape.getRadius(), shape.getRadius());
 
+	hitbox = RectangleShape(Vector2f(30, 30));
+	hitbox.setFillColor(sf::Color(255, 255, 0, 100));
+	hitbox.setOrigin(15, 15);
+
 	// Posición inicial
 	startPositionX = positionX = 400;
 	startPositionY = positionY = 50;
@@ -52,7 +56,7 @@ void Ball::update(float deltaTime)
 
 	// Nueva posición
 	shape.setPosition(positionX, positionY);
-
+	hitbox.setPosition(positionX, positionY);
 }
 
 void Ball::bounce()
@@ -73,5 +77,10 @@ void Ball::setIsMovingRight(bool isMovingRight)
 void Ball::draw(RenderWindow* window)
 {
 	window->draw(shape);
+}
+
+RectangleShape Ball::getHitbox()
+{
+	return hitbox;
 }
 

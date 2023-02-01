@@ -7,6 +7,7 @@ class Ball
 {
 private:
 	CircleShape shape;
+	RectangleShape hitbox;
 	float startPositionX = .0f;
 	float startPositionY = .0f;
 	float initialVelocityX = .0f;
@@ -34,5 +35,7 @@ public:
 	void setIsMovingRight(bool isMovingRight);
 
 	void draw(RenderWindow* window);
+
+	RectangleShape getHitbox();
 };
 

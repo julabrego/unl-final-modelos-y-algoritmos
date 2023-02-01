@@ -10,6 +10,11 @@ Item::Item(Score* score)
 	circle = CircleShape(20.f);
 	circle.setFillColor(sf::Color(100, 0, 0));
 	circle.setOrigin(circle.getRadius(), circle.getRadius());
+	
+	// Hitbox
+	hitbox = RectangleShape(Vector2f(30, 30));
+	hitbox.setFillColor(sf::Color(255, 255, 0, 100));
+	hitbox.setOrigin(15, 15);
 
 	// Posición inicial
 	startPositionY = positionY = 600 + circle.getRadius();
@@ -33,12 +38,13 @@ void Item::update(float deltaTime)
 
 	// Nueva posición
 	circle.setPosition(positionX, positionY);
-
+	hitbox.setPosition(positionX, positionY);
 }
 
 void Item::draw(RenderWindow* window)
 {
 	window->draw(circle);
+	window->draw(hitbox);
 }
 
 void Item::setPositionX(float positionX)
@@ -82,4 +88,9 @@ float Item::getMaxSpeed()
 bool Item::isMoving()
 {
 	return moving;
+}
+
+bool Item::isBeingHitted(RectangleShape playersHitbox)
+{
+	return hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds());
 }

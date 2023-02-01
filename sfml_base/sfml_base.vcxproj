@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="sfml_base.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Collides.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="SoundPlayer.h" />

@@ -12,6 +12,7 @@ Game::Game()
 
 	ball = new Ball();
 	score = Score();
+	hud = new HUD();
 
 	items[0] = new Item(&score);
 	items[1] = new Item(&score);
@@ -45,7 +46,16 @@ void Game::loop()
 			if (e.type == Event::Closed)
 				window->close();
 
-			if (playing) {
+			if (currentFase != Fase::PLAYING && hud->getMostrarTitulo()) {
+				if (e.type == Event::MouseButtonReleased) {
+					mousePosicion = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+					if (hud->manejarClickSobreBotonJugar(mousePosicion)) {
+						startGame();
+					}
+				}
+			}
+
+			if (currentFase == Fase::PLAYING) {
 				listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
 				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
@@ -68,48 +78,56 @@ void Game::update()
 	totalTime += deltaTime;
 	holdingToSpawn += deltaTime;
 
-	/*std::cout << totalTime << std::endl;*/
-	ball->update(deltaTime);
-
-	if (listeningKeys.leftArrow)
-		ball->setIsMovingLeft(true);
-	else
-		ball->setIsMovingLeft(false);
-
-	if (listeningKeys.rightArrow)
-		ball->setIsMovingRight(true);
-	else
-		ball->setIsMovingRight(false);
-
-	for (Item* item : items) {
-		item->update(deltaTime);
+	if (currentFase == Fase::MAIN_MENU) {
+		//hud->pantallaMenuPrincipal();
 	}
+	else if (currentFase == Fase::PLAYING) {
+		ball->update(deltaTime);
 
-	// Spawnear item cada cierto tiempo
-	if (holdingToSpawn > spawnFrequency) {
-		holdingToSpawn = 0;
+		if (listeningKeys.leftArrow)
+			ball->setIsMovingLeft(true);
+		else
+			ball->setIsMovingLeft(false);
 
-		// spawn item en posición random
-		do {
-			nextItem = rand() % 11;
-			std::cout << nextItem << std::endl;
-		} while (items[nextItem]->isMoving());
+		if (listeningKeys.rightArrow)
+			ball->setIsMovingRight(true);
+		else
+			ball->setIsMovingRight(false);
 
-		items[nextItem]->start();
-		nextItem = -1;
-
-		// Se cuelga
-		if (score.getAvoidedItems() > 0 && score.getAvoidedItems() % 2 == 0) {
-			if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
-
-			for (Item* item : items) {
-				if (item->getMaxSpeed() < 500)
-					item->setMaxSpeed(item->getMaxSpeed() + 10);
-				std::cout << "max speed: " << item->getMaxSpeed() << std::endl;
-			};
-
-			if (spawnFrequency < 0.6) spawnFrequency = 0.6;
+		for (Item* item : items) {
+			item->update(deltaTime);
 		}
+
+		// Spawnear item cada cierto tiempo
+		if (holdingToSpawn > spawnFrequency) {
+			holdingToSpawn = 0;
+
+			// spawn item en posición random
+			do {
+				nextItem = rand() % 11;
+				std::cout << nextItem << std::endl;
+			} while (items[nextItem]->isMoving());
+
+			items[nextItem]->start();
+			nextItem = -1;
+
+			// Se cuelga
+			if (score.getAvoidedItems() > 0 && score.getAvoidedItems() % 2 == 0) {
+				if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
+
+				for (Item* item : items) {
+					if (item->getMaxSpeed() < 500)
+						item->setMaxSpeed(item->getMaxSpeed() + 10);
+					std::cout << "max speed: " << item->getMaxSpeed() << std::endl;
+				};
+
+				if (spawnFrequency < 0.6) spawnFrequency = 0.6;
+			}
+		}
+		else if (currentFase == Fase::GAME_OVER) {
+
+		}
+
 	}
 
 	// Check collisions
@@ -131,18 +149,37 @@ void Game::update()
 */
 void Game::draw()
 {
-	if (playing) {
-		// player->draw(window);
+	if (currentFase == Fase::MAIN_MENU) {
+		hud->pantallaMenuPrincipal();
+	}
+	else if (currentFase == Fase::PLAYING) {
+		hud->ocultarTituloYSubtitulo();
+		ball->draw(window);
+
+		for (Item* item : items) {
+			item->draw(window);
+		}
+	}
+	else if (currentFase == Fase::GAME_OVER) {
+		hud->pantallaGameOver();
 	}
 
-	ball->draw(window);
-
-	for (Item* item : items) {
-		item->draw(window);
-	}
+	hud->draw(window);
 }
 
 Game::~Game()
 {
 	//delete window;
+}
+
+void Game::startGame()
+{
+	//vidas = 3;
+	//puntos = 0;
+	//npcsAbatidos = 0;
+	//escenario->setMaximoEnPantalla(1);
+
+	//cuentaRegresiva = 4;
+	currentFase = Fase::PLAYING;
+	playing = true;
 }

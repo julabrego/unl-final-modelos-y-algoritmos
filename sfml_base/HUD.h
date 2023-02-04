@@ -26,6 +26,7 @@ private:
 public:
 	HUD(Score* score, int* time);
 	void pantallaMenuPrincipal();
+	void centerTitleAndSubtitle();
 	void pantallaGameOver();
 
 	void setMostrarTitulo(bool mostrarTitulo);
@@ -38,7 +39,6 @@ public:
 
 	bool manejarClickSobreBotonJugar(sf::Vector2f mousePosicion);
 
-	void mostrarCuentaRegresiva(int numero);
 	void update();
 	void draw(sf::RenderWindow* window);
 };

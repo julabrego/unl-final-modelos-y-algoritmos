@@ -20,7 +20,6 @@ HUD::HUD(Score* score, int* timeCounter)
 	titulo.setFont(font);
 	titulo.setCharacterSize(50);
 	titulo.setFillColor(sf::Color::White);
-	titulo.setOrigin(titulo.getScale().x, titulo.getScale().y);
 
 	subtitulo.setFont(font);
 	subtitulo.setCharacterSize(26);
@@ -44,21 +43,27 @@ HUD::HUD(Score* score, int* timeCounter)
 
 void HUD::pantallaMenuPrincipal() {
 	titulo.setString("La bocha loca");
-	subtitulo.setString("");
+	subtitulo.setString("Juntá los colores");
 
-	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
-	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 275);
+	centerTitleAndSubtitle();
 
 	mostrarTitulo = true;
 	mostrarSubtitulo = true;
+}
+void HUD::centerTitleAndSubtitle()
+{
+	titulo.setOrigin(titulo.getGlobalBounds().width / 2, titulo.getGlobalBounds().height / 2);
+	titulo.setPosition(400, 200);
+
+	subtitulo.setOrigin(subtitulo.getGlobalBounds().width / 2, subtitulo.getGlobalBounds().height / 2);
+	subtitulo.setPosition(400, 275);
 }
 void HUD::pantallaGameOver()
 {
 	titulo.setString("GAME OVER");
 	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()) + " | High score: " + std::to_string(this->_score->getHighScore()));
 
-	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
-	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width / 2, 275);
+	centerTitleAndSubtitle();
 
 	mostrarTitulo = true;
 	mostrarSubtitulo = true;
@@ -113,21 +118,6 @@ void HUD::setMostrarSubtitulo(bool mostrarSubtitulo)
 bool HUD::getMostrarSubtitulo()
 {
 	return mostrarSubtitulo;
-}
-
-void HUD::mostrarCuentaRegresiva(int numero)
-{
-	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
-
-	if (numero != 0) {
-		titulo.setString(std::to_string(numero));
-	}
-	else {
-		titulo.setString("YA!");
-	}
-
-	mostrarTitulo = true;
-	mostrarSubtitulo = false;
 }
 
 bool HUD::manejarClickSobreBotonJugar(sf::Vector2f mousePosicion)

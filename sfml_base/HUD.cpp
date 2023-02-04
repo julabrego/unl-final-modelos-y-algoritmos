@@ -1,7 +1,9 @@
 #include "HUD.h"
 #include <iostream>
-HUD::HUD()
+HUD::HUD(Score* score)
 {
+	_score = score;
+
 	rectanguloBottom = new sf::RectangleShape(sf::Vector2f(960.0f, 50.0f));
 	rectanguloBottom->setFillColor(sf::Color::Black);
 	rectanguloBottom->setPosition(0, 600 - rectanguloBottom->getSize().y);
@@ -9,7 +11,7 @@ HUD::HUD()
 	if (!font.loadFromFile("assets/dogicapixelbold.ttf"));
 
 	textosBottom.setFont(font);
-	textosBottom.setString("Vidas: 3 - Puntos: 100");
+	textosBottom.setString("-");
 	textosBottom.setCharacterSize(26);
 	textosBottom.setFillColor(sf::Color::White);
 	textosBottom.setPosition(rectanguloBottom->getPosition().x + 10, rectanguloBottom->getPosition().y + 10);
@@ -27,7 +29,7 @@ HUD::HUD()
 	rectanguloBotonJugar->setFillColor(sf::Color::White);
 	rectanguloBotonJugar->setOutlineThickness(5.0f);
 	rectanguloBotonJugar->setOutlineColor(sf::Color::Black);
-	rectanguloBotonJugar->setPosition(380, 310);
+	rectanguloBotonJugar->setPosition(800 / 2 - rectanguloBotonJugar->getGlobalBounds().width / 2, 310);
 
 	textoBotonJugar.setFont(font);
 	textoBotonJugar.setCharacterSize(26);
@@ -38,7 +40,7 @@ HUD::HUD()
 }
 
 void HUD::pantallaMenuPrincipal() {
-	titulo.setString("EL JUEGO DE LA PELOTITA");
+	titulo.setString("La bocha loca");
 	subtitulo.setString("");
 
 	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
@@ -50,7 +52,7 @@ void HUD::pantallaMenuPrincipal() {
 void HUD::pantallaGameOver()
 {
 	titulo.setString("GAME OVER");
-	subtitulo.setString("Puntos: " + std::to_string(this->puntos));
+	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()));
 
 	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
 	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 260);
@@ -59,12 +61,9 @@ void HUD::pantallaGameOver()
 	mostrarSubtitulo = true;
 }
 
-void HUD::update(int vidas, int puntos)
+void HUD::update()
 {
-	this->vidas = vidas;
-	this->puntos = puntos;
-
-	textosBottom.setString("Vidas: " + std::to_string(this->vidas) + " | Puntos: " + std::to_string(this->puntos));
+	textosBottom.setString("Score: " + std::to_string(this->_score->getTotal()) + " | Tiempo: " + std::to_string(100));
 }
 
 

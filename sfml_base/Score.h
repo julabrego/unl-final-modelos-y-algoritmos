@@ -2,8 +2,8 @@
 class Score
 {
 private:
-	int avoidedItems;
-	int total;
+	int avoidedItems = 0;
+	int total = 0;
 
 public:
 	Score();

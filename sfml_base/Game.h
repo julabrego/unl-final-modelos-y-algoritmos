@@ -22,7 +22,7 @@ private:
 	Ball *ball;
 	Item* items[11];
 
-	Score score;
+	Score* score;
 	HUD* hud;
 
 	double spawnFrequency = .8f;

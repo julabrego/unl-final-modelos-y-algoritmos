@@ -1,9 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Score.h"
 
 class HUD
 {
 private:
+	Score* _score;
+
 	sf::Texture texture;
 	sf::Font font;
 
@@ -16,12 +19,11 @@ private:
 	sf::RectangleShape* rectanguloBotonJugar;
 	sf::Text textoBotonJugar;
 
-	int vidas, puntos = 0;
 	bool mostrarTitulo = false;
 	bool mostrarSubtitulo = false;
 
 public:
-	HUD();
+	HUD(Score* score);
 	void pantallaMenuPrincipal();
 	void pantallaGameOver();
 
@@ -36,7 +38,7 @@ public:
 	bool manejarClickSobreBotonJugar(sf::Vector2f mousePosicion);
 
 	void mostrarCuentaRegresiva(int numero);
-	void update(int vidas, int puntos);
+	void update();
 	void draw(sf::RenderWindow* window);
 };
 

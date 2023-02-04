@@ -13,6 +13,8 @@ Ball::Ball()
 	// Posición inicial
 	startPositionX = positionX = 400;
 	startPositionY = positionY = 50;
+
+	generateColor();
 }
 
 void Ball::generateColor()

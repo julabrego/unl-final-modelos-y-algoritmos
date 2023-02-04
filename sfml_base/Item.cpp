@@ -1,11 +1,5 @@
 #include "Item.h"
 
-void Item::generateColor()
-{
-	color = rand() % 4;
-	circle.setFillColor(AVAILABLE_COLORS[color]);
-}
-
 Item::Item()
 {
 }
@@ -27,6 +21,19 @@ Item::Item(Score* score)
 	startPositionY = positionY = 600 + circle.getRadius();
 
 	_score = score;
+
+	if (!font.loadFromFile("assets/dogicapixelbold.ttf"));
+
+	textScore.setFont(font);
+	textScore.setString("+100");
+	textScore.setCharacterSize(16);
+	textScore.setFillColor(sf::Color::White);
+}
+
+void Item::generateColor()
+{
+	color = rand() % 4;
+	circle.setFillColor(AVAILABLE_COLORS[color]);
 }
 
 void Item::update(float deltaTime)
@@ -46,12 +53,29 @@ void Item::update(float deltaTime)
 	// Nueva posición
 	circle.setPosition(positionX, positionY);
 	hitbox.setPosition(positionX, positionY);
+
+	// Text score 
+	if (textScoreVisibility) {
+		if (timeScoreBeingVisible > 0) {
+			timeScoreBeingVisible--;
+			textScore.setFillColor(sf::Color(255, 255, 255, timeScoreBeingVisible * 10 > 255 ? 255 : timeScoreBeingVisible * 10));
+			textScore.move(0, -0.5f);
+		}
+		else {
+			textScoreVisibility = false;
+		}
+	}
 }
 
 void Item::draw(RenderWindow* window)
 {
 	window->draw(circle);
 	//window->draw(hitbox);
+
+	// Text score 
+	if (textScoreVisibility) {
+		window->draw(textScore);
+	}
 }
 
 void Item::setPositionX(float positionX)
@@ -99,6 +123,8 @@ bool Item::isMoving()
 bool Item::handleCollisionWithPlayer(RectangleShape playersHitbox)
 {
 	if (hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds())) {
+	std::cout << "ASDASD";
+		textScore.setPosition(positionX - textScore.getGlobalBounds().width / 2, positionY);
 		reachTop();
 		return true;
 	}
@@ -108,4 +134,11 @@ bool Item::handleCollisionWithPlayer(RectangleShape playersHitbox)
 int Item::getColor()
 {
 	return color;
+}
+
+void Item::showTextScore(std::string text)
+{
+	textScore.setString(text);
+	textScoreVisibility = true;
+	timeScoreBeingVisible = 50;
 }

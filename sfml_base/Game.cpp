@@ -11,20 +11,20 @@ Game::Game()
 	window->setFramerateLimit(60);
 
 	ball = new Ball();
-	score = Score();
-	hud = new HUD();
+	score = new Score();
+	hud = new HUD(score);
 
-	items[0] = new Item(&score);
-	items[1] = new Item(&score);
-	items[2] = new Item(&score);
-	items[3] = new Item(&score);
-	items[4] = new Item(&score);
-	items[5] = new Item(&score);
-	items[6] = new Item(&score);
-	items[7] = new Item(&score);
-	items[8] = new Item(&score);
-	items[9] = new Item(&score);
-	items[10] = new Item(&score);
+	items[0] = new Item(score);
+	items[1] = new Item(score);
+	items[2] = new Item(score);
+	items[3] = new Item(score);
+	items[4] = new Item(score);
+	items[5] = new Item(score);
+	items[6] = new Item(score);
+	items[7] = new Item(score);
+	items[8] = new Item(score);
+	items[9] = new Item(score);
+	items[10] = new Item(score);
 
 	for (int i = 0; i < 11; i++) {
 		items[i]->setPositionX(((window->getSize().x / 11) * i) + (window->getSize().x / 11) / 2);
@@ -98,6 +98,21 @@ void Game::update()
 			item->update(deltaTime);
 		}
 
+		// Check collisions
+		for (Item* item : items) {
+			if (item->handleCollisionWithPlayer(ball->getHitbox())) {
+				if (item->getColor() == ball->getColor()) {
+					score->addOneItem();
+					item->showTextScore("+100");
+				}
+				else {
+					score->substractOneItem();
+					item->showTextScore("-100");
+				}
+				ball->generateColor();
+			}
+		}
+
 		// Spawnear item cada cierto tiempo
 		if (holdingToSpawn > spawnFrequency) {
 			holdingToSpawn = 0;
@@ -111,14 +126,12 @@ void Game::update()
 			items[nextItem]->start();
 			nextItem = -1;
 
-			// Se cuelga
-			if (score.getAvoidedItems() > 0 && score.getAvoidedItems() % 2 == 0) {
+			if (score->getAvoidedItems() > 0 && score->getAvoidedItems() % 2 == 0) {
 				if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
 
 				for (Item* item : items) {
 					if (item->getMaxSpeed() < 500)
 						item->setMaxSpeed(item->getMaxSpeed() + 10);
-					std::cout << "max speed: " << item->getMaxSpeed() << std::endl;
 				};
 
 				if (spawnFrequency < 0.6) spawnFrequency = 0.6;
@@ -128,19 +141,8 @@ void Game::update()
 
 		}
 
-	}
+		hud->update();
 
-	// Check collisions
-	for (Item* item : items) {
-		if (item->handleCollisionWithPlayer(ball->getHitbox())) {
-			if (item->getColor() == ball->getColor()) {
-				score.addOneItem();
-			}
-			else {
-				score.substractOneItem();
-			}
-			ball->generateColor();
-		}
 	}
 }
 

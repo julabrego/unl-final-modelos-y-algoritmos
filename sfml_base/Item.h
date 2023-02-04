@@ -15,6 +15,11 @@ private:
 	RectangleShape hitbox;
 	Score* _score;
 
+	sf::Font font;
+	sf::Text textScore;
+	bool textScoreVisibility = false;
+	int timeScoreBeingVisible = 0;
+
 	float startPositionX = .0f;
 	float startPositionY = .0f;
 	float initialVelocityX = .0f;
@@ -46,6 +51,8 @@ public:
 
 	bool handleCollisionWithPlayer(RectangleShape playersHitbox);
 	int getColor();
+
+	void showTextScore(std::string text);
 
 };
 

@@ -43,6 +43,9 @@ String SoundPlayer::getAudioFileName(SoundName soundName)
 	case SoundPlayer::C5:
 		fullAudioFilePath += "C5.wav";
 		break;
+	case SoundPlayer::MISS:
+		fullAudioFilePath += "Miss.wav";
+		break;
 	default:
 		break;
 	}

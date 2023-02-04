@@ -29,7 +29,8 @@ void Score::add(int value)
 
 void Score::substract(int value)
 {
-	if (total > 0) total -= value;
+	total -= value;
+	if (total < 0) total = 0;
 }
 
 void Score::reset()

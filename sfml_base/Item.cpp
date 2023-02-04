@@ -4,9 +4,11 @@ Item::Item()
 {
 }
 
-Item::Item(Score* score)
+Item::Item(Score* score, std::string* availableColors)
 {
 	srand(time(NULL));
+
+	AVAILABLE_COLORS = availableColors;
 
 	// Seteo círculo de color verde
 	circle = CircleShape(20.f);
@@ -33,7 +35,12 @@ Item::Item(Score* score)
 void Item::generateColor()
 {
 	color = rand() % 4;
-	circle.setFillColor(AVAILABLE_COLORS[color]);
+
+	if (!texture.loadFromFile("assets/" + AVAILABLE_COLORS[color] + ".png"))
+		std::cout << "No se encontró la textura" << std::endl;
+
+	sprite.setTexture(texture);
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 }
 
 void Item::update(float deltaTime)
@@ -48,6 +55,7 @@ void Item::update(float deltaTime)
 	// Nueva posición
 	circle.setPosition(positionX, positionY);
 	hitbox.setPosition(positionX, positionY);
+	sprite.setPosition(positionX, positionY);
 
 	// Text score 
 	if (textScoreVisibility) {
@@ -60,12 +68,16 @@ void Item::update(float deltaTime)
 			textScoreVisibility = false;
 		}
 	}
+	else {
+		textScore.setPosition(positionX - textScore.getGlobalBounds().width / 2, positionY);
+	}
 }
 
 void Item::draw(RenderWindow* window)
 {
-	window->draw(circle);
+	//window->draw(circle);
 	//window->draw(hitbox);
+	window->draw(sprite);
 
 	// Text score 
 	if (textScoreVisibility) {
@@ -118,7 +130,6 @@ bool Item::isMoving()
 bool Item::handleCollisionWithPlayer(RectangleShape playersHitbox)
 {
 	if (hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds())) {
-		textScore.setPosition(positionX - textScore.getGlobalBounds().width / 2, positionY);
 		reachTop();
 		return true;
 	}
@@ -146,4 +157,9 @@ void Item::hideTextScore()
 int Item::getPositionY()
 {
 	return positionY;
+}
+
+void Item::resetInitialMaxSpeed()
+{
+	maxSpeed = initialMaxSpeed;
 }

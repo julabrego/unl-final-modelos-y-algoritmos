@@ -10,21 +10,28 @@ Game::Game()
 	window = new RenderWindow(VideoMode(800, 600, 32), "New game");
 	window->setFramerateLimit(60);
 
-	ball = new Ball();
+	if (!textureBackground.loadFromFile("assets/background.jpg"))
+		std::cout << "No se encontró la textura" << std::endl;
+
+	spriteBackground.setTexture(textureBackground);
+	spriteBackground.setOrigin(spriteBackground.getGlobalBounds().width / 2, spriteBackground.getGlobalBounds().height / 2);
+	spriteBackground.setPosition(400, 300);
+
+	ball = new Ball(AVAILABLE_COLORS);
 	score = new Score();
 	hud = new HUD(score, &timeCounter);
 
-	items[0] = new Item(score);
-	items[1] = new Item(score);
-	items[2] = new Item(score);
-	items[3] = new Item(score);
-	items[4] = new Item(score);
-	items[5] = new Item(score);
-	items[6] = new Item(score);
-	items[7] = new Item(score);
-	items[8] = new Item(score);
-	items[9] = new Item(score);
-	items[10] = new Item(score);
+	items[0] = new Item(score, AVAILABLE_COLORS);
+	items[1] = new Item(score, AVAILABLE_COLORS);
+	items[2] = new Item(score, AVAILABLE_COLORS);
+	items[3] = new Item(score, AVAILABLE_COLORS);
+	items[4] = new Item(score, AVAILABLE_COLORS);
+	items[5] = new Item(score, AVAILABLE_COLORS);
+	items[6] = new Item(score, AVAILABLE_COLORS);
+	items[7] = new Item(score, AVAILABLE_COLORS);
+	items[8] = new Item(score, AVAILABLE_COLORS);
+	items[9] = new Item(score, AVAILABLE_COLORS);
+	items[10] = new Item(score, AVAILABLE_COLORS);
 
 	for (int i = 0; i < 11; i++) {
 		items[i]->setPositionX(((window->getSize().x / 11) * i) + (window->getSize().x / 11) / 2);
@@ -46,10 +53,10 @@ void Game::loop()
 			if (e.type == Event::Closed)
 				window->close();
 
-			if (currentFase != Fase::PLAYING && hud->getMostrarTitulo()) {
+			if (currentFase != Fase::PLAYING && hud->getShowTitle()) {
 				if (e.type == Event::MouseButtonReleased) {
 					mousePosicion = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-					if (hud->manejarClickSobreBotonJugar(mousePosicion)) {
+					if (hud->handleClickButtonPlay(mousePosicion)) {
 						startGame();
 					}
 				}
@@ -104,25 +111,29 @@ void Game::update()
 				if (item->getColor() == ball->getColor()) {
 					score->add(100);
 					item->showTextScore("+100");
-					
-					if (randomBallSoundPicker <= 8)
-						randomBallSoundPicker++;
-					else
-						randomBallSoundPicker = 0;
+
+					if (nextSoundIndex <= 7) {
+						soundPlayer->play(ballHitSounds[nextSoundIndex]);
+						nextSoundIndex++;
+					}
+					else {
+						nextSoundIndex = 0;
+					}
 				}
 				else {
 					score->substract(100);
 					item->showTextScore("-100");
-					randomBallSoundPicker = 0;
+					soundPlayer->play(SoundPlayer::SoundName::MISS);
+					nextSoundIndex = 0;
 				}
 				ball->generateColor();
-
-				soundPlayer->play(ballHitSounds[randomBallSoundPicker]);
 			}
 
 			if (item->getPositionY() < 0) {
 				if (item->getColor() == ball->getColor()) {
-
+					item->showTextScore("-50");
+					score->substract(50);
+					soundPlayer->play(SoundPlayer::SoundName::MISS);
 				}
 				item->reachTop();
 			}
@@ -140,17 +151,17 @@ void Game::update()
 			items[nextItem]->start();
 			nextItem = -1;
 
-			if (holdingToSpawn > spawnFrequency) {
-				std::cout << "spawnFrequency = " << spawnFrequency << std::endl;
-				if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
+			// Cada 10 segundos subo la frecuencia de aparición y velocidad de los items
+			if (timeCounter < 60 && timeCounter % 5 == 0) {
+				if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .25f;
 
 				for (Item* item : items) {
 					if (item->getMaxSpeed() < 500)
 						item->setMaxSpeed(item->getMaxSpeed() + 10);
 				};
-
-				if (spawnFrequency < 0.6) spawnFrequency = 0.6;
 			}
+
+			if (spawnFrequency < 0.6) spawnFrequency = 0.6;
 		}
 
 		if (timeCounter > 0) {
@@ -176,11 +187,13 @@ void Game::update()
 */
 void Game::draw()
 {
+	window->draw(spriteBackground);
+
 	if (currentFase == Fase::MAIN_MENU) {
-		hud->pantallaMenuPrincipal();
+		hud->mainMenuScreen();
 	}
 	else if (currentFase == Fase::PLAYING) {
-		hud->ocultarTituloYSubtitulo();
+		hud->hideTitleAndSubtitle();
 		ball->draw(window);
 
 		for (Item* item : items) {
@@ -188,7 +201,7 @@ void Game::draw()
 		}
 	}
 	else if (currentFase == Fase::GAME_OVER) {
-		hud->pantallaGameOver();
+		hud->gameOverScreen();
 	}
 
 	hud->draw(window);
@@ -196,7 +209,7 @@ void Game::draw()
 
 Game::~Game()
 {
-	//delete window;
+	delete window;
 }
 
 void Game::startGame()
@@ -216,6 +229,9 @@ void Game::endGame()
 		item->reachTop();
 		item->stop();
 		item->hideTextScore();
+		item->resetInitialMaxSpeed();
 	}
 	score->setHighScore();
+	nextSoundIndex = 0;
+	spawnFrequency = initialSpawnFrequency;
 }

@@ -12,7 +12,11 @@ class Item
 private:
 	float speed = 0;
 	CircleShape circle;
+	Texture texture;
+	Sprite sprite;
 	RectangleShape hitbox;
+	std::string* AVAILABLE_COLORS;
+
 	Score* _score;
 
 	sf::Font font;
@@ -28,16 +32,16 @@ private:
 	float velocityY = .0f;
 	float acceleration = 10.0f;
 	float maxSpeed = 200.0f;
+	float initialMaxSpeed = maxSpeed;
 
 	int color = 0;
 	void generateColor();
-	sf::Color AVAILABLE_COLORS[4] = { sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Magenta };
 
 	bool moving = false;
 
 public:
 	Item();
-	Item(Score* score);
+	Item(Score* score, std::string* availableColors);
 	void update(float deltaTime);
 	void draw(RenderWindow *window);
 	void setPositionX(float positionX);
@@ -55,5 +59,6 @@ public:
 	void showTextScore(std::string text);
 	void hideTextScore();
 	int getPositionY();
+	void resetInitialMaxSpeed();
 };
 

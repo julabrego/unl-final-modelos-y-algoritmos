@@ -5,124 +5,138 @@ HUD::HUD(Score* score, int* timeCounter)
 	_score = score;
 	_timeCounter = timeCounter;
 
-	rectanguloBottom = new sf::RectangleShape(sf::Vector2f(960.0f, 50.0f));
-	rectanguloBottom->setFillColor(sf::Color::Black);
-	rectanguloBottom->setPosition(0, 600 - rectanguloBottom->getSize().y);
+	rectangleBottom = new sf::RectangleShape(sf::Vector2f(960.0f, 50.0f));
+	rectangleBottom->setFillColor(sf::Color::Black);
+	rectangleBottom->setPosition(0, 600 - rectangleBottom->getSize().y);
 
 	if (!font.loadFromFile("assets/dogicapixelbold.ttf"));
 
-	textosBottom.setFont(font);
-	textosBottom.setString("-");
-	textosBottom.setCharacterSize(26);
-	textosBottom.setFillColor(sf::Color::White);
-	textosBottom.setPosition(rectanguloBottom->getPosition().x + 10, rectanguloBottom->getPosition().y + 10);
+	textsBottom.setFont(font);
+	textsBottom.setString("-");
+	textsBottom.setCharacterSize(22);
+	textsBottom.setFillColor(sf::Color::White);
+	textsBottom.setPosition(rectangleBottom->getPosition().x + 10, rectangleBottom->getPosition().y + 10);
 
-	titulo.setFont(font);
-	titulo.setCharacterSize(50);
-	titulo.setFillColor(sf::Color::White);
+	title.setFont(font);
+	title.setCharacterSize(50);
+	title.setFillColor(sf::Color::White);
 
-	subtitulo.setFont(font);
-	subtitulo.setCharacterSize(26);
-	subtitulo.setFillColor(sf::Color::White);
+	subtitle.setFont(font);
+	subtitle.setCharacterSize(26);
+	subtitle.setFillColor(sf::Color::White);
 
-	rectanguloBotonJugar = new sf::RectangleShape(sf::Vector2f(200.0f, 50.0f));
-	rectanguloBotonJugar->setOrigin(rectanguloBotonJugar->getGlobalBounds().width / 2, rectanguloBotonJugar->getGlobalBounds().height / 2);
-	rectanguloBotonJugar->setFillColor(sf::Color::White);
-	rectanguloBotonJugar->setOutlineThickness(5.0f);
-	rectanguloBotonJugar->setOutlineColor(sf::Color::Black);
-	rectanguloBotonJugar->setPosition(800 / 2, 350);
+	instructions.setFont(font);
+	instructions.setCharacterSize(18);
+	instructions.setFillColor(sf::Color::White);
 
-	textoBotonJugar.setFont(font);
-	textoBotonJugar.setCharacterSize(26);
-	textoBotonJugar.setString("Jugar");
-	textoBotonJugar.setOrigin(textoBotonJugar.getGlobalBounds().width / 2, textoBotonJugar.getGlobalBounds().height / 2);
-	textoBotonJugar.setFillColor(sf::Color::Black);
-	textoBotonJugar.setPosition(rectanguloBotonJugar->getPosition().x, rectanguloBotonJugar->getPosition().y);
+	rectangleButtonPlay = new sf::RectangleShape(sf::Vector2f(200.0f, 50.0f));
+	rectangleButtonPlay->setOrigin(rectangleButtonPlay->getGlobalBounds().width / 2, rectangleButtonPlay->getGlobalBounds().height / 2);
+	rectangleButtonPlay->setFillColor(sf::Color::White);
+	rectangleButtonPlay->setOutlineThickness(5.0f);
+	rectangleButtonPlay->setOutlineColor(sf::Color::Black);
+	rectangleButtonPlay->setPosition(800 / 2, 350);
+
+	textButtonPlay.setFont(font);
+	textButtonPlay.setCharacterSize(26);
+	textButtonPlay.setString("Jugar");
+	textButtonPlay.setOrigin(textButtonPlay.getGlobalBounds().width / 2, textButtonPlay.getGlobalBounds().height / 2);
+	textButtonPlay.setFillColor(sf::Color::Black);
+	textButtonPlay.setPosition(rectangleButtonPlay->getPosition().x, rectangleButtonPlay->getPosition().y);
 
 }
 
-void HUD::pantallaMenuPrincipal() {
-	titulo.setString("La bocha loca");
-	subtitulo.setString("Juntá los colores");
+void HUD::mainMenuScreen() {
+	title.setString("La bocha loca");
+	subtitle.setString("Juntá los colores");
 
 	centerTitleAndSubtitle();
 
-	mostrarTitulo = true;
-	mostrarSubtitulo = true;
+	instructions.setString("Mover la pelota usando los cursores y\n\nrecolectar las otras pelotas del mismo color.");
+	instructions.setOrigin(instructions.getGlobalBounds().width / 2, instructions.getGlobalBounds().height / 2);
+	instructions.setPosition(400, 560);
+
+	showTitle = true;
+	showSubtitle = true;
+	showInstructions = true;
 }
 void HUD::centerTitleAndSubtitle()
 {
-	titulo.setOrigin(titulo.getGlobalBounds().width / 2, titulo.getGlobalBounds().height / 2);
-	titulo.setPosition(400, 200);
+	title.setOrigin(title.getGlobalBounds().width / 2, title.getGlobalBounds().height / 2);
+	title.setPosition(400, 200);
 
-	subtitulo.setOrigin(subtitulo.getGlobalBounds().width / 2, subtitulo.getGlobalBounds().height / 2);
-	subtitulo.setPosition(400, 275);
+	subtitle.setOrigin(subtitle.getGlobalBounds().width / 2, subtitle.getGlobalBounds().height / 2);
+	subtitle.setPosition(400, 275);
 }
-void HUD::pantallaGameOver()
+void HUD::gameOverScreen()
 {
-	titulo.setString("GAME OVER");
-	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()) + " | High score: " + std::to_string(this->_score->getHighScore()));
+	title.setString("GAME OVER");
+	subtitle.setString("Score: " + std::to_string(this->_score->getTotal()) + " | High score: " + std::to_string(this->_score->getHighScore()));
 
 	centerTitleAndSubtitle();
 
-	mostrarTitulo = true;
-	mostrarSubtitulo = true;
+	showTitle = true;
+	showSubtitle = true;
 }
 
 void HUD::update()
 {
-	textosBottom.setString("Score: " + std::to_string(this->_score->getTotal()) + " | Tiempo: " + std::to_string(*_timeCounter));
+	textsBottom.setString("Score: " + std::to_string(this->_score->getTotal()) + " | Tiempo: " + std::to_string(*_timeCounter) + " | High score: " + std::to_string(this->_score->getHighScore()));
 }
 
 
 void HUD::draw(sf::RenderWindow* window)
 {
-	if (!mostrarTitulo && !mostrarSubtitulo) {
-		window->draw(*this->rectanguloBottom);
-		window->draw(this->textosBottom);
+	if (!showTitle && !showSubtitle) {
+		window->draw(*this->rectangleBottom);
+		window->draw(this->textsBottom);
 	}
 
-	if (mostrarTitulo) {
-		window->draw(this->titulo);
+	if (showTitle) {
+		window->draw(this->title);
 	}
 
-	if (mostrarSubtitulo) {
-		window->draw(this->subtitulo);
-		window->draw(*this->rectanguloBotonJugar);
-		window->draw(this->textoBotonJugar);
+	if (showSubtitle) {
+		window->draw(this->subtitle);
+		window->draw(*this->rectangleButtonPlay);
+		window->draw(this->textButtonPlay);
+	}
+
+	if (showInstructions) {
+		window->draw(this->instructions);
 	}
 
 }
 
-void HUD::setMostrarTitulo(bool mostrarTitulo)
+void HUD::setShowTitle(bool mostrarTitulo)
 {
-	this->mostrarTitulo = mostrarTitulo;
+	this->showTitle = mostrarTitulo;
 }
 
-bool HUD::getMostrarTitulo()
+bool HUD::getShowTitle()
 {
-	return mostrarTitulo;
+	return showTitle;
 }
 
-void HUD::ocultarTituloYSubtitulo()
+void HUD::hideTitleAndSubtitle()
 {
-	mostrarTitulo = false;
-	mostrarSubtitulo = false;
+	showTitle = false;
+	showSubtitle = false;
+	showInstructions = false;
 }
 
-void HUD::setMostrarSubtitulo(bool mostrarSubtitulo)
+void HUD::setShowSubtitle(bool mostrarSubtitulo)
 {
-	this->mostrarSubtitulo = mostrarSubtitulo;
+	this->showSubtitle = mostrarSubtitulo;
 }
 
-bool HUD::getMostrarSubtitulo()
+bool HUD::getShowSubtitle()
 {
-	return mostrarSubtitulo;
+	return showSubtitle;
 }
 
-bool HUD::manejarClickSobreBotonJugar(sf::Vector2f mousePosicion)
+bool HUD::handleClickButtonPlay(sf::Vector2f mousePosicion)
 {
-	sf::FloatRect bounds = rectanguloBotonJugar->getGlobalBounds();
+	sf::FloatRect bounds = rectangleButtonPlay->getGlobalBounds();
 
 	return (bounds.contains(mousePosicion));
 }

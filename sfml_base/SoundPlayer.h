@@ -16,7 +16,8 @@ public:
 		G4,
 		A4,
 		B4,
-		C5
+		C5,
+		MISS
 	};
 	void play(SoundName soundName);
 

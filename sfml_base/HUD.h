@@ -11,33 +11,35 @@ private:
 	sf::Texture texture;
 	sf::Font font;
 
-	sf::RectangleShape* rectanguloBottom;
-	sf::Text textosBottom;
+	sf::RectangleShape* rectangleBottom;
+	sf::Text textsBottom;
 
-	sf::Text titulo;
-	sf::Text subtitulo;
+	sf::Text title;
+	sf::Text subtitle;
+	sf::Text instructions;
 
-	sf::RectangleShape* rectanguloBotonJugar;
-	sf::Text textoBotonJugar;
+	sf::RectangleShape* rectangleButtonPlay;
+	sf::Text textButtonPlay;
 
-	bool mostrarTitulo = false;
-	bool mostrarSubtitulo = false;
+	bool showTitle = false;
+	bool showSubtitle = false;
+	bool showInstructions = false;
 
 public:
 	HUD(Score* score, int* time);
-	void pantallaMenuPrincipal();
+	void mainMenuScreen();
 	void centerTitleAndSubtitle();
-	void pantallaGameOver();
+	void gameOverScreen();
 
-	void setMostrarTitulo(bool mostrarTitulo);
-	bool getMostrarTitulo();
+	void setShowTitle(bool showTitle);
+	bool getShowTitle();
 
-	void setMostrarSubtitulo(bool mostrarSubtitulo);
-	bool getMostrarSubtitulo();
+	void setShowSubtitle(bool showSubtitle);
+	bool getShowSubtitle();
 
-	void ocultarTituloYSubtitulo();
+	void hideTitleAndSubtitle();
 
-	bool manejarClickSobreBotonJugar(sf::Vector2f mousePosicion);
+	bool handleClickButtonPlay(sf::Vector2f mousePosition);
 
 	void update();
 	void draw(sf::RenderWindow* window);

@@ -26,7 +26,10 @@ private:
 	Score* score;
 	HUD* hud;
 
-	int randomBallSoundPicker = 0;
+	Texture textureBackground;
+	Sprite spriteBackground;
+
+	int nextSoundIndex = 0;
 	SoundPlayer::SoundName ballHitSounds[8] = {
 		SoundPlayer::SoundName::C4,
 		SoundPlayer::SoundName::D4,
@@ -37,9 +40,17 @@ private:
 		SoundPlayer::SoundName::B4,
 		SoundPlayer::SoundName::C5,
 	};
+
+	std::string AVAILABLE_COLORS[5] = {
+		"ORANGE_PANTONE",
+		"WINTER_SKY",
+		"BLUE_VIOLET",
+		"AZURE"
+	};
 	
-	double spawnFrequency = 1.f;
-	double holdingToSpawn = 0.f;
+	float spawnFrequency = 2.f;
+	float initialSpawnFrequency = spawnFrequency;
+	float holdingToSpawn = 0.f;
 	int timeCounter = 0;
 
 	int nextItem = -1;

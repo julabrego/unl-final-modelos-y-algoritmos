@@ -7,7 +7,11 @@ class Ball
 {
 private:
 	CircleShape shape;
+	Texture texture;
+	Sprite sprite;
 	RectangleShape hitbox;
+	std::string* AVAILABLE_COLORS;
+
 	float startPositionX = .0f;
 	float startPositionY = .0f;
 	float initialVelocityX = .0f;
@@ -24,11 +28,10 @@ private:
 	bool isPressingActionBtn;
 
 	int color = 0;
-	sf::Color AVAILABLE_COLORS[4] = { sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Magenta };
-
 
 public:
 	Ball();
+	Ball(std::string* availableColors);
 
 	void restartPosition();
 	void update(float deltaTime);

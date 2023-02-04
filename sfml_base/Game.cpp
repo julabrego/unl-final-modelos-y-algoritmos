@@ -154,7 +154,7 @@ void Game::update()
 			}
 		}
 		else {
-			currentFase = Fase::GAME_OVER;
+			endGame();
 		}
 
 	}
@@ -195,7 +195,21 @@ Game::~Game()
 
 void Game::startGame()
 {
-	timeCounter = 60;
+	timeCounter = 5;
+	score->reset();
 	currentFase = Fase::PLAYING;
 	playing = true;
+}
+
+void Game::endGame()
+{
+	currentFase = Fase::GAME_OVER;
+	ball->stop();
+	ball->restartPosition();
+	for (Item* item : items) {
+		item->reachTop();
+		item->stop();
+		item->hideTextScore();
+	}
+	score->setHighScore();
 }

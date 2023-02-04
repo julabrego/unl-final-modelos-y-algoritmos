@@ -60,6 +60,7 @@ public:
 	Fase currentFase = Fase::MAIN_MENU;
 
 	void startGame();
+	void endGame();
 };
 
 

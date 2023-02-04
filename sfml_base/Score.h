@@ -11,9 +11,10 @@ public:
 	
 	int getTotal();
 	int getHighScore();
-	void setHighScore(int score);
+	void setHighScore();
 
 	void add(int value);
 	void substract(int value);
+	void reset();
 };
 

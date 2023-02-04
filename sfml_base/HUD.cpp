@@ -27,16 +27,18 @@ HUD::HUD(Score* score, int* timeCounter)
 	subtitulo.setFillColor(sf::Color::White);
 
 	rectanguloBotonJugar = new sf::RectangleShape(sf::Vector2f(200.0f, 50.0f));
+	rectanguloBotonJugar->setOrigin(rectanguloBotonJugar->getGlobalBounds().width / 2, rectanguloBotonJugar->getGlobalBounds().height / 2);
 	rectanguloBotonJugar->setFillColor(sf::Color::White);
 	rectanguloBotonJugar->setOutlineThickness(5.0f);
 	rectanguloBotonJugar->setOutlineColor(sf::Color::Black);
-	rectanguloBotonJugar->setPosition(800 / 2 - rectanguloBotonJugar->getGlobalBounds().width / 2, 310);
+	rectanguloBotonJugar->setPosition(800 / 2, 350);
 
 	textoBotonJugar.setFont(font);
 	textoBotonJugar.setCharacterSize(26);
 	textoBotonJugar.setString("Jugar");
+	textoBotonJugar.setOrigin(textoBotonJugar.getGlobalBounds().width / 2, textoBotonJugar.getGlobalBounds().height / 2);
 	textoBotonJugar.setFillColor(sf::Color::Black);
-	textoBotonJugar.setPosition(rectanguloBotonJugar->getPosition().x + 35, rectanguloBotonJugar->getPosition().y + 10);
+	textoBotonJugar.setPosition(rectanguloBotonJugar->getPosition().x, rectanguloBotonJugar->getPosition().y);
 
 }
 
@@ -45,7 +47,7 @@ void HUD::pantallaMenuPrincipal() {
 	subtitulo.setString("");
 
 	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
-	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 260);
+	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 275);
 
 	mostrarTitulo = true;
 	mostrarSubtitulo = true;
@@ -56,7 +58,7 @@ void HUD::pantallaGameOver()
 	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()) + " | High score: " + std::to_string(this->_score->getHighScore()));
 
 	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
-	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 260);
+	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width / 2, 275);
 
 	mostrarTitulo = true;
 	mostrarSubtitulo = true;

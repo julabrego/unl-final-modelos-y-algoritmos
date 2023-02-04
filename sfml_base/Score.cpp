@@ -1,7 +1,9 @@
 #include "Score.h"
+#include <iostream>
 
 Score::Score()
 {
+	std::cout << "Construyo score" << std::endl;
 	highScore = 0;
 	total= 0;
 }
@@ -16,9 +18,9 @@ int Score::getHighScore()
 	return highScore;
 }
 
-void Score::setHighScore(int score)
+void Score::setHighScore()
 {
-	if (score > highScore) highScore = score;
+	if (total > highScore) highScore = total;
 }
 
 void Score::add(int value)
@@ -29,4 +31,9 @@ void Score::add(int value)
 void Score::substract(int value)
 {
 	if (total > 0) total -= value;
+}
+
+void Score::reset()
+{
+	total = 0;
 }

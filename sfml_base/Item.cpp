@@ -137,6 +137,12 @@ void Item::showTextScore(std::string text)
 	timeScoreBeingVisible = 50;
 }
 
+void Item::hideTextScore()
+{
+	textScoreVisibility = false;
+	timeScoreBeingVisible = 0;
+}
+
 int Item::getPositionY()
 {
 	return positionY;

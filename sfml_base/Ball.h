@@ -26,13 +26,14 @@ private:
 	int color = 0;
 	sf::Color AVAILABLE_COLORS[4] = { sf::Color::Blue, sf::Color::Red, sf::Color::Green, sf::Color::Magenta };
 
-	void restartPosition();
 
 public:
 	Ball();
 
+	void restartPosition();
 	void update(float deltaTime);
 	void bounce();
+	void stop();
 
 	void setIsMovingLeft(bool isMovingLeft);
 	void setIsMovingRight(bool isMovingRight);

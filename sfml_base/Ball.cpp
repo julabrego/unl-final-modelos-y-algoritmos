@@ -71,6 +71,11 @@ void Ball::bounce()
 	velocityX = -velocityX * 0.9;
 }
 
+void Ball::stop()
+{
+	velocityX = 0;
+}
+
 void Ball::setIsMovingLeft(bool isMovingLeft)
 {
 	this->isMovingLeft = isMovingLeft;

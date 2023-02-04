@@ -102,16 +102,22 @@ void Game::update()
 		for (Item* item : items) {
 			if (item->handleCollisionWithPlayer(ball->getHitbox())) {
 				if (item->getColor() == ball->getColor()) {
-					//score->addOneItem();
 					score->add(100);
 					item->showTextScore("+100");
+					
+					if (randomBallSoundPicker <= 8)
+						randomBallSoundPicker++;
+					else
+						randomBallSoundPicker = 0;
 				}
 				else {
-					//score->substractOneItem();
 					score->substract(100);
 					item->showTextScore("-100");
+					randomBallSoundPicker = 0;
 				}
 				ball->generateColor();
+
+				soundPlayer->play(ballHitSounds[randomBallSoundPicker]);
 			}
 
 			if (item->getPositionY() < 0) {
@@ -195,7 +201,7 @@ Game::~Game()
 
 void Game::startGame()
 {
-	timeCounter = 5;
+	timeCounter = 60;
 	score->reset();
 	currentFase = Fase::PLAYING;
 	playing = true;

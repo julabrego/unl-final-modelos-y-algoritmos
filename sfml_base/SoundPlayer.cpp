@@ -19,11 +19,29 @@ String SoundPlayer::getAudioFileName(SoundName soundName)
 
 	switch (soundName)
 	{
-	case SoundPlayer::Ejemplo1:
-		fullAudioFilePath += "ejemplo1.wav";
+	case SoundPlayer::C4:
+		fullAudioFilePath += "C4.wav";
 		break;
-	case SoundPlayer::Ejemplo2:
-		fullAudioFilePath += "ejemplo2.wav";
+	case SoundPlayer::D4:
+		fullAudioFilePath += "D4.wav";
+		break;
+	case SoundPlayer::E4:
+		fullAudioFilePath += "E4.wav";
+		break;
+	case SoundPlayer::F4:
+		fullAudioFilePath += "F4.wav";
+		break;
+	case SoundPlayer::G4:
+		fullAudioFilePath += "G4.wav";
+		break;
+	case SoundPlayer::A4:
+		fullAudioFilePath += "A4.wav";
+		break;
+	case SoundPlayer::B4:
+		fullAudioFilePath += "B4.wav";
+		break;
+	case SoundPlayer::C5:
+		fullAudioFilePath += "C5.wav";
 		break;
 	default:
 		break;

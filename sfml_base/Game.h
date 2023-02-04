@@ -26,6 +26,18 @@ private:
 	Score* score;
 	HUD* hud;
 
+	int randomBallSoundPicker = 0;
+	SoundPlayer::SoundName ballHitSounds[8] = {
+		SoundPlayer::SoundName::C4,
+		SoundPlayer::SoundName::D4,
+		SoundPlayer::SoundName::E4,
+		SoundPlayer::SoundName::F4,
+		SoundPlayer::SoundName::G4,
+		SoundPlayer::SoundName::A4,
+		SoundPlayer::SoundName::B4,
+		SoundPlayer::SoundName::C5,
+	};
+	
 	double spawnFrequency = 1.f;
 	double holdingToSpawn = 0.f;
 	int timeCounter = 0;

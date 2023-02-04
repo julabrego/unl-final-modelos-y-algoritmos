@@ -3,7 +3,6 @@
 
 Score::Score()
 {
-	std::cout << "Construyo score" << std::endl;
 	highScore = 0;
 	total= 0;
 }

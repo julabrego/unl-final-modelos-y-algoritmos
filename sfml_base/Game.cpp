@@ -12,7 +12,7 @@ Game::Game()
 
 	ball = new Ball();
 	score = new Score();
-	hud = new HUD(score);
+	hud = new HUD(score, &timeCounter);
 
 	items[0] = new Item(score);
 	items[1] = new Item(score);
@@ -73,10 +73,10 @@ void Game::loop()
 */
 void Game::update()
 {
-	delta = clock.restart();
-	deltaTime = delta.asSeconds();
+	deltaTime = clock.restart().asSeconds();
 	totalTime += deltaTime;
 	holdingToSpawn += deltaTime;
+	secondsCounter += deltaTime;
 
 	if (currentFase == Fase::MAIN_MENU) {
 		//hud->pantallaMenuPrincipal();
@@ -102,14 +102,23 @@ void Game::update()
 		for (Item* item : items) {
 			if (item->handleCollisionWithPlayer(ball->getHitbox())) {
 				if (item->getColor() == ball->getColor()) {
-					score->addOneItem();
+					//score->addOneItem();
+					score->add(100);
 					item->showTextScore("+100");
 				}
 				else {
-					score->substractOneItem();
+					//score->substractOneItem();
+					score->substract(100);
 					item->showTextScore("-100");
 				}
 				ball->generateColor();
+			}
+
+			if (item->getPositionY() < 0) {
+				if (item->getColor() == ball->getColor()) {
+
+				}
+				item->reachTop();
 			}
 		}
 
@@ -120,13 +129,13 @@ void Game::update()
 			// spawn item en posición random
 			do {
 				nextItem = rand() % 11;
-				std::cout << nextItem << std::endl;
 			} while (items[nextItem]->isMoving());
 
 			items[nextItem]->start();
 			nextItem = -1;
 
-			if (score->getAvoidedItems() > 0 && score->getAvoidedItems() % 2 == 0) {
+			if (holdingToSpawn > spawnFrequency) {
+				std::cout << "spawnFrequency = " << spawnFrequency << std::endl;
 				if (spawnFrequency > 0.6) spawnFrequency = spawnFrequency - .5f;
 
 				for (Item* item : items) {
@@ -137,13 +146,23 @@ void Game::update()
 				if (spawnFrequency < 0.6) spawnFrequency = 0.6;
 			}
 		}
-		else if (currentFase == Fase::GAME_OVER) {
 
+		if (timeCounter > 0) {
+			if (secondsCounter > 1) {
+				secondsCounter = 0;
+				timeCounter--;
+			}
+		}
+		else {
+			currentFase = Fase::GAME_OVER;
 		}
 
-		hud->update();
+	}
+	else if (currentFase == Fase::GAME_OVER) {
 
 	}
+
+	hud->update();
 }
 
 /**
@@ -176,12 +195,7 @@ Game::~Game()
 
 void Game::startGame()
 {
-	//vidas = 3;
-	//puntos = 0;
-	//npcsAbatidos = 0;
-	//escenario->setMaximoEnPantalla(1);
-
-	//cuentaRegresiva = 4;
+	timeCounter = 60;
 	currentFase = Fase::PLAYING;
 	playing = true;
 }

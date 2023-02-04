@@ -53,6 +53,6 @@ public:
 	int getColor();
 
 	void showTextScore(std::string text);
-
+	int getPositionY();
 };
 

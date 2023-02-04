@@ -2,29 +2,31 @@
 
 Score::Score()
 {
-	avoidedItems = 0;
+	highScore = 0;
 	total= 0;
-}
-
-void Score::addOneItem()
-{
-	avoidedItems++;
-	total = avoidedItems * 100;
-}
-
-int Score::getAvoidedItems()
-{
-	return avoidedItems;
-}
-
-void Score::substractOneItem()
-{
-	if(avoidedItems > 0)
-		avoidedItems--;
-	total = avoidedItems * 100;
 }
 
 int Score::getTotal()
 {
 	return total;
+}
+
+int Score::getHighScore()
+{
+	return highScore;
+}
+
+void Score::setHighScore(int score)
+{
+	if (score > highScore) highScore = score;
+}
+
+void Score::add(int value)
+{
+	total += value;
+}
+
+void Score::substract(int value)
+{
+	if (total > 0) total -= value;
 }

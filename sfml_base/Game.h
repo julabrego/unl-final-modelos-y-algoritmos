@@ -18,6 +18,7 @@ private:
 	Time delta;
 	float deltaTime;
 	float totalTime = 0;
+	float secondsCounter = 0;
 
 	Ball *ball;
 	Item* items[11];
@@ -25,8 +26,9 @@ private:
 	Score* score;
 	HUD* hud;
 
-	double spawnFrequency = .8f;
+	double spawnFrequency = 1.f;
 	double holdingToSpawn = 0.f;
+	int timeCounter = 0;
 
 	int nextItem = -1;
 	sf::Vector2f mousePosicion;

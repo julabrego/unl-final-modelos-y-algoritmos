@@ -2,14 +2,18 @@
 class Score
 {
 private:
-	int avoidedItems = 0;
+	
+	int highScore = 0;
 	int total = 0;
 
 public:
 	Score();
-	void addOneItem();
-	void substractOneItem();
-	int getAvoidedItems();
+	
 	int getTotal();
+	int getHighScore();
+	void setHighScore(int score);
+
+	void add(int value);
+	void substract(int value);
 };
 

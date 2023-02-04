@@ -1,8 +1,9 @@
 #include "HUD.h"
 #include <iostream>
-HUD::HUD(Score* score)
+HUD::HUD(Score* score, int* timeCounter)
 {
 	_score = score;
+	_timeCounter = timeCounter;
 
 	rectanguloBottom = new sf::RectangleShape(sf::Vector2f(960.0f, 50.0f));
 	rectanguloBottom->setFillColor(sf::Color::Black);
@@ -52,7 +53,7 @@ void HUD::pantallaMenuPrincipal() {
 void HUD::pantallaGameOver()
 {
 	titulo.setString("GAME OVER");
-	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()));
+	subtitulo.setString("Score: " + std::to_string(this->_score->getTotal()) + " | High score: " + std::to_string(this->_score->getHighScore()));
 
 	titulo.setPosition(400 - titulo.getGlobalBounds().width / 2, 200);
 	subtitulo.setPosition(400 - subtitulo.getGlobalBounds().width, 260);
@@ -63,7 +64,7 @@ void HUD::pantallaGameOver()
 
 void HUD::update()
 {
-	textosBottom.setString("Score: " + std::to_string(this->_score->getTotal()) + " | Tiempo: " + std::to_string(100));
+	textosBottom.setString("Score: " + std::to_string(this->_score->getTotal()) + " | Tiempo: " + std::to_string(*_timeCounter));
 }
 
 

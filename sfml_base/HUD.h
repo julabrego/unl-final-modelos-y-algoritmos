@@ -6,6 +6,7 @@ class HUD
 {
 private:
 	Score* _score;
+	int* _timeCounter;
 
 	sf::Texture texture;
 	sf::Font font;
@@ -23,7 +24,7 @@ private:
 	bool mostrarSubtitulo = false;
 
 public:
-	HUD(Score* score);
+	HUD(Score* score, int* time);
 	void pantallaMenuPrincipal();
 	void pantallaGameOver();
 

@@ -42,11 +42,6 @@ void Item::update(float deltaTime)
 		velocityY -= acceleration;
 	}
 
-	// Bordes de pantalla
-	if (positionY < 0) {
-		reachTop();
-	}
-
 	// Actualización de coordenadas
 	positionY += velocityY * deltaTime;
 
@@ -123,7 +118,6 @@ bool Item::isMoving()
 bool Item::handleCollisionWithPlayer(RectangleShape playersHitbox)
 {
 	if (hitbox.getGlobalBounds().intersects(playersHitbox.getGlobalBounds())) {
-	std::cout << "ASDASD";
 		textScore.setPosition(positionX - textScore.getGlobalBounds().width / 2, positionY);
 		reachTop();
 		return true;
@@ -141,4 +135,9 @@ void Item::showTextScore(std::string text)
 	textScore.setString(text);
 	textScoreVisibility = true;
 	timeScoreBeingVisible = 50;
+}
+
+int Item::getPositionY()
+{
+	return positionY;
 }

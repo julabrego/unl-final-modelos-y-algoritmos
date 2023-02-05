@@ -43,6 +43,7 @@ public:
 	void hideTitleAndSubtitle();
 
 	bool handleClickButtonPlay(sf::Vector2f mousePosition);
+	bool handleClickButtonBackToMainMenu(sf::Vector2f mousePosition);
 
 	void update();
 	void draw(sf::RenderWindow* window);

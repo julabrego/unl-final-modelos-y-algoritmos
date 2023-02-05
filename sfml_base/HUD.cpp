@@ -13,7 +13,7 @@ HUD::HUD(Score* score, int* timeCounter)
 
 	textsBottom.setFont(font);
 	textsBottom.setString("-");
-	textsBottom.setCharacterSize(21);
+	textsBottom.setCharacterSize(20);
 	textsBottom.setFillColor(sf::Color::White);
 	textsBottom.setPosition(rectangleBottom->getPosition().x + 10, rectangleBottom->getPosition().y + 10);
 
@@ -155,4 +155,11 @@ bool HUD::handleClickButtonPlay(sf::Vector2f mousePosicion)
 	sf::FloatRect bounds = rectangleButtonPlay->getGlobalBounds();
 
 	return (bounds.contains(mousePosicion));
+}
+
+bool HUD::handleClickButtonBackToMainMenu(sf::Vector2f mousePosition)
+{
+	sf::FloatRect bounds = backToMainMenuButton->getGlobalBounds();
+
+	return (bounds.contains(mousePosition));
 }

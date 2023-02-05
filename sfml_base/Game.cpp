@@ -66,6 +66,13 @@ void Game::loop()
 				listeningKeys.leftArrow = Keyboard::isKeyPressed(Keyboard::Left);
 				listeningKeys.rightArrow = Keyboard::isKeyPressed(Keyboard::Right);
 				listeningKeys.space = Keyboard::isKeyPressed(Keyboard::Space);
+
+				if (e.type == Event::MouseButtonReleased) {
+					mousePosicion = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+					if (hud->handleClickButtonBackToMainMenu(mousePosicion)) {
+						backToMainMenu();
+					}
+				}
 			}
 		}
 
@@ -223,6 +230,18 @@ void Game::startGame()
 void Game::endGame()
 {
 	currentFase = Fase::GAME_OVER;
+	score->setHighScore();
+	resetAllToOriginalValues();
+}
+
+void Game::backToMainMenu()
+{
+	currentFase = Fase::MAIN_MENU;
+	resetAllToOriginalValues();
+}
+
+void Game::resetAllToOriginalValues()
+{
 	ball->stop();
 	ball->restartPosition();
 	for (Item* item : items) {
@@ -231,7 +250,6 @@ void Game::endGame()
 		item->hideTextScore();
 		item->resetInitialMaxSpeed();
 	}
-	score->setHighScore();
 	nextSoundIndex = 0;
 	spawnFrequency = initialSpawnFrequency;
 }

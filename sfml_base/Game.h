@@ -84,6 +84,8 @@ public:
 
 	void startGame();
 	void endGame();
+	void resetAllToOriginalValues();
+	void backToMainMenu();
 };
 
 

@@ -13,7 +13,7 @@ HUD::HUD(Score* score, int* timeCounter)
 
 	textsBottom.setFont(font);
 	textsBottom.setString("-");
-	textsBottom.setCharacterSize(22);
+	textsBottom.setCharacterSize(21);
 	textsBottom.setFillColor(sf::Color::White);
 	textsBottom.setPosition(rectangleBottom->getPosition().x + 10, rectangleBottom->getPosition().y + 10);
 
@@ -43,6 +43,19 @@ HUD::HUD(Score* score, int* timeCounter)
 	textButtonPlay.setFillColor(sf::Color::Black);
 	textButtonPlay.setPosition(rectangleButtonPlay->getPosition().x, rectangleButtonPlay->getPosition().y);
 
+	backToMainMenuButton = new sf::RectangleShape(sf::Vector2f(45.0f, 45.0f));
+	backToMainMenuButton->setOrigin(backToMainMenuButton->getGlobalBounds().width / 2, backToMainMenuButton->getGlobalBounds().height / 2);
+	backToMainMenuButton->setFillColor(sf::Color::White);
+	backToMainMenuButton->setOutlineThickness(2.5f);
+	backToMainMenuButton->setOutlineColor(sf::Color::Black);
+	backToMainMenuButton->setPosition(800 - backToMainMenuButton->getGlobalBounds().width / 2, 600 - backToMainMenuButton->getGlobalBounds().height / 2);
+
+	textBackToMainMenuButton.setFont(font);
+	textBackToMainMenuButton.setString("<<");
+	textBackToMainMenuButton.setOrigin(textBackToMainMenuButton.getGlobalBounds().width / 2, textBackToMainMenuButton.getGlobalBounds().height / 2);
+	textBackToMainMenuButton.setCharacterSize(22);
+	textBackToMainMenuButton.setFillColor(sf::Color::Black);
+	textBackToMainMenuButton.setPosition(backToMainMenuButton->getPosition().x, backToMainMenuButton->getPosition().y);
 }
 
 void HUD::mainMenuScreen() {
@@ -89,6 +102,9 @@ void HUD::draw(sf::RenderWindow* window)
 	if (!showTitle && !showSubtitle) {
 		window->draw(*this->rectangleBottom);
 		window->draw(this->textsBottom);
+
+		window->draw(*this->backToMainMenuButton);
+		window->draw(this->textBackToMainMenuButton);
 	}
 
 	if (showTitle) {

@@ -21,6 +21,9 @@ private:
 	sf::RectangleShape* rectangleButtonPlay;
 	sf::Text textButtonPlay;
 
+	sf::RectangleShape* backToMainMenuButton;
+	sf::Text textBackToMainMenuButton;
+
 	bool showTitle = false;
 	bool showSubtitle = false;
 	bool showInstructions = false;

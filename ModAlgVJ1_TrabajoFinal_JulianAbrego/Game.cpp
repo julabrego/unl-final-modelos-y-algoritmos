@@ -7,7 +7,7 @@ Game::Game()
 	srand(time(NULL));
 	soundPlayer = new SoundPlayer();
 
-	window = new RenderWindow(VideoMode(800, 600, 32), "New game");
+	window = new RenderWindow(VideoMode(800, 600, 32), "La bocha loca | Modelos y Algoritmos de Videojuegos 1 - trabajo final | Julián Abrego");
 	window->setFramerateLimit(60);
 
 	if (!textureBackground.loadFromFile("assets/background.jpg"))

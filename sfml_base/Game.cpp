@@ -119,8 +119,9 @@ void Game::update()
 					score->add(100);
 					item->showTextScore("+100");
 
-					if (nextSoundIndex <= 7) {
-						soundPlayer->play(ballHitSounds[nextSoundIndex]);
+					soundPlayer->play(ballHitSounds[nextSoundIndex]);
+					
+					if (nextSoundIndex < 7) {
 						nextSoundIndex++;
 					}
 					else {

@@ -150,7 +150,7 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Score.cpp" />
-    <ClCompile Include="sfml_base.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
